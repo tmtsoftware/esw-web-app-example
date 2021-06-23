@@ -1,0 +1,6 @@
+{
+  "short_name": "libraryUI",
+  "name": "libraryUI",
+  "start_url": "./index.html",
+  "display": "standalone"
+}

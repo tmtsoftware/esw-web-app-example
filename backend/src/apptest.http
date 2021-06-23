@@ -1,0 +1,2 @@
+#### Request to test sayHello endpoint
+GET http://<host>:8080/books
