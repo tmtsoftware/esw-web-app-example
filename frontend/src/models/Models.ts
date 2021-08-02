@@ -1,11 +1,12 @@
-export interface Book {
-  id: string
-  title: string
-  author: string
-  available: boolean
+// #add-models
+export interface RaDecRequest {
+  raInDecimals: number
+  decInDecimals: number
 }
 
-export interface InsertBookReq {
-  author: string
-  title: string
+export interface RaDecResponse {
+  id: string
+  formattedRa: string
+  formattedDec: string
 }
+// #add-models

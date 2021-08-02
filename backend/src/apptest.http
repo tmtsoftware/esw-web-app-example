@@ -1,2 +1,12 @@
-#### Request to test sayHello endpoint
-GET http://<host>:8080/books
+#### Requests to test raDecValues endpoint
+POST http://<server_ip>:<app_port>/raDecValues
+Content-Type: application/json
+
+{
+  "raInDecimals": 2.13,
+  "decInDecimals": 2.18
+}
+
+
+####
+GET http://<server_ip>:<app_port>/raDecValues
