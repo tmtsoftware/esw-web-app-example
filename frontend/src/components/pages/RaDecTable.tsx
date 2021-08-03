@@ -60,6 +60,6 @@ export const RaDecTable = (): JSX.Element => {
       bordered
     />
   )
-  // #add-component
-  // #use-fetch
 }
+// #add-component
+// #use-fetch

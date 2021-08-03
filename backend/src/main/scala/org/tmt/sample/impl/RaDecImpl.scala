@@ -11,7 +11,7 @@ import scala.concurrent.Future
 // #raDecToString-impl
 class RaDecImpl extends RaDecService {
 
-  var raDecValues = mutable.ListBuffer[RaDecResponse]()
+  private val raDecValues = mutable.ListBuffer[RaDecResponse]()
 
   override def raDecToString(raDecRequest: RaDecRequest): Future[RaDecResponse] = {
     val formattedRa   = Angle.raToString(raDecRequest.raInDecimals)

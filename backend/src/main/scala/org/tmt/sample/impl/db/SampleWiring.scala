@@ -11,7 +11,9 @@ import scala.concurrent.duration.DurationInt
 
 class SampleWiring(val port: Option[Int]) extends ServerWiring {
   override val actorSystemName: String = "sample-actor-system"
+  // #raDecImpl-db-ref
   import actorRuntime.ec
+  // #raDecImpl-db-ref
 
   // #db-wiring-setup
   private lazy val databaseServiceFactory = new DatabaseServiceFactory(actorRuntime.typedSystem)

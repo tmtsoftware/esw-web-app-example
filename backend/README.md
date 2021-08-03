@@ -19,7 +19,7 @@ The CSW AAS Service needs to be running before starting the components.
 Follow below instructions to run AAS:
 
 ```
-cs install csw-services:v3.0.0-M1
+cs install csw-services:v4.0.0-M1
 csw-services start --auth
 ```
 

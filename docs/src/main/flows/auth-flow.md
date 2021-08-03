@@ -29,38 +29,37 @@ Typescript
 
 ### Use secured fetch in our component
 
-Typescript
-: @@snip [SecuredRaDecInput.tsx](../../../../frontend/src/components/pages/SecuredRaDecInput.tsx) { #use-fetch }
-
 You would require locationService instance for getting backend url. This instance is available via context named `LocationServiceProvider`.
-Add the following as first line inside the `SecuredRa` component.
+Also, we need auth hook to get token. Add the following as first lines inside the `SecuredRa` component.
 
 Typescript
 : @@snip [SecuredRaDecInput.tsx](../../../../frontend/src/components/pages/SecuredRaDecInput.tsx) { #use-location-service-from-context }
 
-Add protected route in `App.tsx`
+Add `onFinish` handler
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/routes/Routes.tsx) { #add-protected-route }
+: @@snip [SecuredRaDecInput.tsx](../../../../frontend/src/components/pages/SecuredRaDecInput.tsx) { #use-fetch }
 
-Update Menubar
-
-* Remove the `/greeting` menu item
-* Update menu item action for protected route in `App.tsx` from `AdminGreeting` to `SecuredRa`.
+Add protected route in `Routes.tsx`
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-protected-route-action }
+: @@snip [Routes.tsx](../../../../frontend/src/routes/Routes.tsx) { #add-protected-route }
+
+Add action for our new route in `MenuBar.tsx` below previously added RaDec `Menu.Item`
+
+Typescript
+: @@snip [MenuBar.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-protected-route-action }
 
 ### Add Login & Logout functionality
 
 Make use of generated `Login` and `Logout` components .
 
-Add menu items actions for `logging in` and `logging out` in `MenuBar.tsx`.
+Add menu items actions for `logging in` and `logging out` in `MenuBar.tsx` below previously added SecuredRaDec `Menu.Item`
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-login-logout }
+: @@snip [MenuBar.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-login-logout }
 
 Use Auth Hook to get handle on auth store.
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #use-auth-hook }
+: @@snip [MenuBar.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #use-auth-hook }

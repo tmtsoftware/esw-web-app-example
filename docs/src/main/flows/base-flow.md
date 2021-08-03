@@ -13,7 +13,7 @@ Basic flow will show you how to add a routes to backend application and consume 
 Next two sections are extensions, if you need to add authentication in your application or
 if you need to save your data to a database.
 
-At any point in time if you want to see code with complete file, you can refer final [example app](https://github.com/mertia-himanshu/sample) and compare your changes.
+At any point in time if you want to see code with complete file, you can refer final [example app](https://github.com/tmtsoftware/esw-web-app-example) and compare your changes.
 
 ---
 
@@ -70,6 +70,7 @@ Generated code contains a sample application, we will delete its code and add ou
 * Delete Existing files from `core/models` package in `src`
 * Delete existing files from `service` package in `src`
 * Delete existing files from `impl` package in `src`
+* Delete file `JSampleImplWrapper.scala` from `http` package in `src`
 
 ### Add our Models classes
 
@@ -171,7 +172,7 @@ The tilda (~) at the end, is used as a path concatenator in akka dsl.
 You can safely remove it for now. However, in the following section of this tutorial we are going to add new routes to this file, at that point you would want to add it again to concat multiple routes.
 @@@
 
-After we add the route, we need to add the codec to serialize/deserialize our request/response
+After we add the route, it will show some compilation errors, to fix that we need to add the codec to serialize/deserialize our request/response
 
 ### Add Codecs
 
@@ -182,8 +183,7 @@ Add codecs in `HttpCodecs.scala`
 Scala
 : @@snip [HttpCodecs.scala](../../../../backend/src/main/scala/org/tmt/sample/http/HttpCodecs.scala) { #add-codec }
 
-SampleRoute should compile now successfully
-
+SampleRoute should compile now successfully and ready to use.
 
 ### Manually test our application
 
@@ -229,6 +229,7 @@ Successful response contains the formattedRa and formattedDec value with a uniqu
 Add this to your `apptest.http` and test your `raDecValues` GET route
 
 ```http
+####
 GET http://<server_ip>:<app_port>/raDecValues
 ```
 
@@ -246,17 +247,15 @@ Successful response contains list of with formattedRa value.
 
 ## Consume routes in frontend
 
-In this section, we will be replacing the greeting component with a new React component (Ra).
+In this section, we will be consuming data with using our React components.
 We will show how to create a client side route to add/render custom components within the application.
 
 First lets cleanup unwanted code
 
-* Go to `pages` folder in `src`
-* Delete all component files under this directory
-* Go to `pages` folder in `test`  
-* Delete all test files under this directory
+* Go to `components/pages` folder in `src`, delete all component files under this directory
+* Delete folder `components/form`
+* Go to `pages` folder in `test`, delete all test files under this directory
 * Remove the contents of `api.ts` file
-* Delete folder `form`
 
 ### Add models
 
@@ -280,7 +279,6 @@ For GET Route
 Typescript
 : @@snip [api.ts](../../../../frontend/src/utils/api.ts) { #fetch-saved-ra-dec-values }
 
-
 ### Add our React component
 
 * In `pages` folder, create `RaDecInput.tsx`
@@ -289,16 +287,16 @@ Typescript
 Typescript
 : @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #add-component }
 
-Use `postRaDecValues` method in our component
-
-Typescript
-: @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #use-fetch }
-
 You would require locationService instance for getting backend url. This instance is available via context named `LocationServiceProvider`.
 Add the following as first line inside the `RaDecInput` component.
 
 Typescript
 : @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #use-location-service-from-context }
+
+Add `onFinish` handler and use `postRaDecValues` method in our component
+
+Typescript
+: @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #use-fetch }
 
 * In `pages` folder ,Add new component `RaDecTable.tsx` to display ra values table
 
@@ -322,17 +320,17 @@ Typescript
 
 Next, we need to show our newly created `RaDec` component.
 
-Update `Routes.tsx` file and map our new created `RaDec` component to `/` path.
+Update `Routes.tsx` file and delete references to deleted files and their routes, map our new created `RaDec` component to `/` path.
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/routes/Routes.tsx) { #add-route }
+: @@snip [Routes.tsx](../../../../frontend/src/routes/Routes.tsx) { #add-route }
 
 Now, we need a link to let user navigate to `Ra` form from different parts of application.
 
-Update `MenuBar.tsx` and replace `Ra` route in the menu item action instead of `Home`.
+Update `MenuBar.tsx` and delete existing `Menu` and its `Menu.Item`. Add our menu item.
 
 Typescript
-: @@snip [App.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-route-action }
+: @@snip [MenuBar.tsx](../../../../frontend/src/components/menu/MenuBar.tsx) { #add-route-action }
 
 Now, we have linked all pieces of our frontend application.
 
@@ -341,7 +339,8 @@ $:frontend> npm start
 ```
 
 It will launch application in Browser with an input form.
-* Add a value like '2.13' and '2.18' and click submit. 
+
+* Add a value like '2.13' and '2.18' and click submit.
 * Refresh page
 * You will see formatted ra and dec value in table below the input form.
 
