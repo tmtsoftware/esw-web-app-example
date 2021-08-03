@@ -11,8 +11,6 @@ It has below flows, Basic Flow is mandatory and others are extensions after doin
 * Adding Documentation
 
 Basic flow will show you how to add a routes to backend application and consume them in your frontend.
-Next two sections are extensions, if you need to add authentication in your application or
-if you need to save your data to a database.
 
 At any point in time if you want to see code with complete file, you can refer final [example app](https://github.com/tmtsoftware/esw-web-app-example) and compare your changes.
 
