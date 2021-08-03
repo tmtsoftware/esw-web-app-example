@@ -3,11 +3,12 @@
 ## Overview
 
 This template contains steps to create an example application using the template.
-It has three sections:
+It has below flows, Basic Flow is mandatory and others are extensions after doing basic flow.
 
 * Basic flow - Creating a Web Application
 * Adding Authentication
 * Adding Persistence
+* Adding Documentation
 
 Basic flow will show you how to add a routes to backend application and consume them in your frontend.
 Next two sections are extensions, if you need to add authentication in your application or

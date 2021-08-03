@@ -87,7 +87,7 @@ is required, as shown in [JSampleImplWrapper](./src/main/scala/org/tmt/sample/ht
 * Core models for supporting the APIs should be added in the [models](./src/main/scala/org/tmt/sample/core/models) package.
 Codecs for these models should be added in [HttpCodecs](./src/main/scala/org/tmt/sample/http/HttpCodecs.scala).
 
-* [SampleWiring](./src/main/scala/org/tmt/sample/SampleWiring.scala) is where the implementation wired up with the routes.
+* [SampleWiring](./src/main/scala/org/tmt/sample/impl/SampleWiring.scala) is where the implementation wired up with the routes.
 
 * [SampleApp](./src/main/scala/org/tmt/sample/SampleApp.scala) is the main runnable application. The command line arguments 
 for starting the app are defined in [SampleAppCommand](./src/main/scala/org/tmt/sample/SampleAppCommand.scala). Any new command  
