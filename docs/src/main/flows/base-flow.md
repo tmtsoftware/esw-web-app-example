@@ -254,7 +254,7 @@ First lets cleanup unwanted code
 * Go to `components/pages` folder in `src`, delete all component files under this directory
 * Delete folder `components/form`
 * Go to `pages` folder in `test`, delete all test files under this directory
-* Remove the contents of `api.ts` file
+* Go to `utils` folder and remove the contents of `api.ts` file
 
 ### Add models
 
