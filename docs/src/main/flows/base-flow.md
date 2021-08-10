@@ -68,7 +68,7 @@ Generated code contains a sample application, we will delete its code and add ou
 * Delete folder `src/main/java` ,`src/test`
 * Delete Existing files from `core/models` package in `src`
 * Delete existing files from `service` package in `src`
-* Delete existing files from `impl` package in `src`
+* Delete file `SampleImpl.scala` from `impl` package in `src`
 * Delete file `JSampleImplWrapper.scala` from `http` package in `src`
 
 ### Add our Models classes
