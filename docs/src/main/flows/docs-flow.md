@@ -1,22 +1,23 @@
 # Adding Paradox Documentation
 
-If you want to write documentation for your application using [paradox](https://developer.lightbend.com/docs/paradox/current/getting-started.html), you can follow below steps.
+The section of the tutorial describes how to write documentation for your application using [paradox](https://developer.lightbend.com/docs/paradox/current/getting-started.html).
 
 ## Pre-requisite
 
-Your application code is checked in some repo in your organization github account.
+Your application code is checked in some repo in your organization Github account.
 
 ## Documentation development flow
 
-Generated sample application contains a `docs` folder, which you can use to write documentation about your project.
-Top level `build.sbt` contains the setup for this `docs` sbt project.
+The sample application generated from the template contains a `docs` folder. 
+This is where you will write the documentation files for your project.
+The top-level `build.sbt` file contains the setup for this `docs` sbt project.
 
-Launch sbt from your console and run command `makeSite`. Then run command `openSite`
+Launch sbt from your console and run command `makeSite`. Then run the command `openSite`
 
 ```bash
 sbt
-sbt:sample>makeSite
-sbt:sample>openSite
+sbt:sample> makeSite
+sbt:sample> openSite
 ```
 
 It will generate sample documentation and open it in your browser showing sample page.
@@ -24,25 +25,25 @@ You can modify various `.md` files present in `docs` folder and repeat above ste
 
 ## Documentation publish flow
 
-When your documentation is ready to be published, go to top level `build.sbt`, it contains a variable with name `githubRepoUrl`.
-Update this url with your github repo url.
-Paradox uses a special branch `gh-pages`, in your github repo itself to keep track of your documentation, Hence we need to set this github repo url.
+The template sets your project up to publish your documentation to Github using [Github Pages](https://pages.github.com/).
+You need to specify the URL of your Github repo in the variable `githubRepoUrl` in your top-level `build.sbt` file.
+This allows paradox to use a special branch, `gh-pages`, in your Github repo to keep track of your documentation.
 
-Reload sbt so that updated url is available in sbt.
-
-```bash
-sbt:sample>reload
-```
-
-Create `gh_pages` branch in your repo following these [quick steps](https://github.com/sbt/sbt-ghpages#initializing-the-gh-pages-branch).
-Very that you see a new branch `gh_pages` in your github repo with an empty commit.
-
-Run command `ghpagesPushSite`, to publish your documentation.
+Reload sbt so that updated URL is available in sbt.
 
 ```bash
-sbt:sample>ghpagesPushSite
+sbt:sample> reload
 ```
 
-Very that you see a new commit in branch `gh_pages`, and branch should contain a folder with name `0.1.0-SNAPSHOT`
+Create the `gh_pages` branch in your repo following these [quick steps](https://github.com/sbt/sbt-ghpages#initializing-the-gh-pages-branch).
+Verify that you see a new branch `gh_pages` in your github repo with an empty commit.
+
+Then, you can run the command `ghpagesPushSite`, to publish your documentation.
+
+```bash
+sbt:sample> ghpagesPushSite
+```
+
+Verify that you see a new commit in branch `gh_pages`, and branch should contain a folder with name `0.1.0-SNAPSHOT`
 
 Open your published site using URL, `http://{your-username}.github.io/{your-project}/0.1.0-SNAPSHOT/`
