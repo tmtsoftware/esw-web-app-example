@@ -1,5 +1,7 @@
+// #fetch-imports
 import type { RaDecRequest, RaDecResponse } from '../models/Models'
 import { get, post } from './Http'
+// #fetch-imports
 
 // #fetch-data
 export const postRaDecValues = async (

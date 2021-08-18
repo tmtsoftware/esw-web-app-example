@@ -1,3 +1,4 @@
+// #table-imports
 import { Table, Typography } from 'antd'
 import type { ColumnsType } from 'antd/lib/table'
 import React, { useEffect, useState } from 'react'
@@ -6,6 +7,7 @@ import type { RaDecResponse } from '../../models/Models'
 import { getRaDecValues } from '../../utils/api'
 import { errorMessage } from '../../utils/message'
 import { getBackendUrl } from '../../utils/resolveBackend'
+// #table-imports
 
 //  #add-columns
 const HeaderTitle = ({ title }: { title: string }): JSX.Element => (

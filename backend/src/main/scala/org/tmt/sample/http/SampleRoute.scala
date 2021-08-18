@@ -15,8 +15,8 @@ class SampleRoute(raDecService: RaDecService, securityDirectives: SecurityDirect
 ) extends HttpCodecs {
 //#raDecImpl-ref
 
+  // #add-routes
   val route: Route = {
-    // #add-routes
     path("raDecValues") {
       post {
         entity(as[RaDecRequest]) { raDecRequest =>
@@ -39,5 +39,7 @@ class SampleRoute(raDecService: RaDecService, securityDirectives: SecurityDirect
       }
     }
     // #add-secured-route
+    // #add-routes
   }
+  // #add-routes
 }

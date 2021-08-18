@@ -1,16 +1,18 @@
+// #input-imports
 import { Button, Form, Input } from 'antd'
 import React from 'react'
 import { useLocationService } from '../../contexts/LocationServiceContext'
 import type { RaDecRequest } from '../../models/Models'
 import { postRaDecValues } from '../../utils/api'
 import { getBackendUrl } from '../../utils/resolveBackend'
+// #input-imports
 
 // #add-component
-// #use-location-service-from-context
 export const RaDecInput = (): JSX.Element => {
-  // #add-component
+// #use-location-service-from-context
   const locationService = useLocationService()
   // #use-location-service-from-context
+    // #add-component
 
   // #use-fetch
   const onFinish = async (values: RaDecRequest) => {
