@@ -28,7 +28,9 @@ export const MenuBar = (): JSX.Element => {
         {isAuthenticated ? <Logout logout={logout} /> : <Login login={login} />}
         {/*// #add-login-logout */}
         {/*// #add-route-action */}
+        {/*// #add-protected-route-action */}
       </Menu>
+      {/*// #add-protected-route-action */}
       {/*// #add-route-action */}
     </>
   )

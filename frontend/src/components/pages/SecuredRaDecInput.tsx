@@ -54,10 +54,10 @@ export const SecuredRaDecInput = (): JSX.Element => {
       wrapperCol={{
         span: 1
       }}>
-      <Form.Item label='RaInDecimals' name='raInDecimals'>
+      <Form.Item label='RaInDecimals (secured)' name='raInDecimals'>
         <Input role='RaInDecimals' style={{ marginLeft: '0.5rem' }} />
       </Form.Item>
-      <Form.Item label='DecInDecimals' name='decInDecimals'>
+      <Form.Item label='DecInDecimals (secured)' name='decInDecimals'>
         <Input role='DecInDecimals' />
       </Form.Item>
       <Form.Item>
