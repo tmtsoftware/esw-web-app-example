@@ -1,15 +1,15 @@
 # Adding Database Persistence
 
 In this section of the tutorial, we will add a database to our application to store the RA/Dec coordinates entered
-in the UI.  We will be using `postgres` to persist our data. We will be using the Jooq DSL to write our queries, 
-which is packaged in the CSW Database Service.
+in the UI instead of the local list variable in the backend.  We will be using `postgres` to persist our data. 
+We will be using the Jooq DSL to write our queries, which is packaged in the CSW Database Service.
 
 First, we will update our backend server to use the database, then we will set up the database itself, and then
 we will run the application.
 
 ## Update backend Implementation
 
-First, we have to make the CSW Database Service library accessible in our project.  
+First, we have to make the CSW Database Service accessible in our project.  
 Add a `csw-database` dependency in `project/Libs.scala`
 
 Scala
@@ -29,8 +29,8 @@ in our wiring.
 Scala
 : @@snip [RaDecRepository.scala](../../../../backend/src/main/scala/org/tmt/sample/impl/db/RaDecRepository.scala) { #add-repository }
 
-Add a method to insert data into the DB.  The `query` method of the `DSLContext` is used to construct a SQL `INSERT`
-statement to insert our formatted RA/Dec strings along with a random UUID. The CSW Database Service provides an 
+Add a method to this class to insert data into the DB.  The `query` method of the `DSLContext` is used to construct an SQL `INSERT`
+statement to insert our formatted RA/Dec strings along with a UUID. The CSW Database Service provides an 
 asynchronous execute method, which returns a negative value on error.  Since the insert is done asynchronously, 
 this method returns a `Future`.
 
@@ -50,8 +50,8 @@ Scala
 
 ### Update backend service implementation
 
-Update `RaDecImpl.scala` to inject the repository dependency. We will also an implicit execution context that can 
-be passed into this class since our `RaDecRepository` class requires one.
+Update `RaDecImpl.scala` to inject the repository dependency. We will also need an implicit execution context 
+curried into this class since our `RaDecRepository` class requires one.
 
 Scala
 : @@snip [RaDecImpl.scala](../../../../backend/src/main/scala/org/tmt/sample/impl/db/RaDecImpl.scala) { #add-repository  }
@@ -71,36 +71,37 @@ References to the locally stored list can now be deleted.
 
 ### Update wiring
 
-Now we need to put everything together by update the wiring.
+Now we need to put everything together by updating the wiring.
 
 First, create the DB setup in `SampleWiring.scala`
 
 Scala
 : @@snip [SampleWiring.scala](../../../../backend/src/main/scala/org/tmt/sample/impl/db/SampleWiring.scala) { #db-wiring-setup }
 
-Here, you can see the database name, username, and password are obtained from the application configuration.  These
+Here you can see the database name, username, and password are obtained from the application configuration.  These
 value are used to create the JOOQ `DSLContext` passed into our repository class.  Let's instantiate the repository,
 passing in our DSL context, and then update the implementation reference to receive the repository.
 
 Scala
 : @@snip [SampleWiring.scala](../../../../backend/src/main/scala/org/tmt/sample/impl/db/SampleWiring.scala) { #raDecImpl-db-ref }
 
-We now need to update our application configuration file with the database configuration.
+We now need to update our application configuration file with the database configuration.  Edit `application.conf` in
+the `src/main/resources` folder.
 
 Scala
 : @@snip [application.conf](../../../../backend/src/main/resources/application.conf) { #db-conf }
 
-As you can see, the database username and password are obtained from environment variables.  We will set these 
-variables later before we run our backend.
+The database username and password are obtained from the environment variables `DB_USERNAME` and `DB_PASSWORD` respectively.
+We will set these variables later before we run our backend.
 
 ## Run the new application
 
 A PostgreSQL database is used in our application.  It must first be installed and then initially configured to 
-work with our applciation.
+work with our application.
 
 ### Database setup
 
-Follow the installation guide to download & install postgres on your machine, if not already installed.
+Follow the installation guide to download and install PostgreSQL on your machine, if not already installed.
 [Link](https://www.postgresql.org/download/)
 
 At this point, we will re-run `csw-services` with the CSW Database Service enabled.  This will run an PostgreSQL
@@ -108,6 +109,11 @@ instance that we can then configure.
 
 The following instructions show how to run the Database Service along with the Location Service and the 
 Authentication and Authorization Service:
+
+@@@note
+For running the Database Service using `csw-services`, the PGDATA environment variable must be set to the 
+Postgres data directory where Postgres is installed e.g. for mac: “/usr/local/var/postgres”.
+@@@
 
 ```bash
 cs install csw-services:v4.0.0-M1
@@ -120,15 +126,15 @@ below sets up a user "postgres" with a password "postgres", but you can use diff
 ```bash
 psql -d postgres
 postgres => CREATE USER postgres with password 'postgres';
-postgres => /q;
+postgres => \q
 psql -d postgres -U postgres
 ```
 
-For this application, we will create an `RAVALUES` table in the database that the application can use to perform fetch and insert queries.
+For this application, we will create an `RADECVALUES` table in the database that the application can use to perform fetch and insert queries.
 The following commands can be used to create a table
 
 ```bash
-postgres = >
+postgres =>
 CREATE TABLE RADECVALUES(
 id TEXT             PRIMARY KEY     NOT NULL,
 formattedRa TEXT                    NOT NULL,
@@ -152,4 +158,8 @@ sbt:backend> run start
 ```
 
 Test your application either with the UI or by using `apptest.http` as described in previous tutorials,
-and verify the data is saved in your postgres table.
+and verify the data is saved in your postgres table.  This can be done in `psql` using the `TABLE` command:
+
+```bash
+postgres => TABLE RADECVALUES
+```
