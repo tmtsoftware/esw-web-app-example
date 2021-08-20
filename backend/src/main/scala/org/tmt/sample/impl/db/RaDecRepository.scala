@@ -1,11 +1,14 @@
 package org.tmt.sample.impl.db
 
+// #repo-imports
 import csw.database.scaladsl.JooqExtentions.{RichQuery, RichResultQuery}
 import org.jooq.DSLContext
 import org.tmt.sample.core.models.RaDecResponse
 
 import java.util.UUID
 import scala.concurrent.{ExecutionContext, Future}
+// #repo-imports
+
 // #add-repository
 class RaDecRepository(dsl: DSLContext)(implicit ec: ExecutionContext) {
   // #add-repository
