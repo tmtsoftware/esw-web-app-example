@@ -12,7 +12,8 @@ The sample application generated from the template contains a `docs` folder.
 This is where you will write the documentation files for your project.
 The top-level `build.sbt` file contains the setup for this `docs` sbt project.
 
-Launch sbt from your console and run command `makeSite`. Then run the command `openSite`
+Launch sbt from your console and run command `makeSite` to construct the documentation pages. 
+Then run the command `openSite` to open the generated docs in your default browser.
 
 ```bash
 sbt
@@ -20,8 +21,8 @@ sbt:sample> makeSite
 sbt:sample> openSite
 ```
 
-It will generate sample documentation and open it in your browser showing sample page.
-You can modify various `.md` files present in `docs` folder and repeat above steps and verify your generated documentation.
+You can modify the various `.md` files present in `docs` folder and repeat above steps and verify your generated 
+documentation.  Refer to the paradox documentation to learn more about the documentation system.
 
 ## Documentation publish flow
 
