@@ -50,7 +50,7 @@ export const RaDecTable = (): JSX.Element => {
     }
 
     fetchRaValues()
-  }, [])
+  }, [locationService])
 
   // #add-component
   return (
