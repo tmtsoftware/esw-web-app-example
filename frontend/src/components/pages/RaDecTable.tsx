@@ -32,7 +32,7 @@ const columns: ColumnsType<RaDecResponse> = [
 
 // #use-fetch
 // #add-component
-export const RaDecTable = (): JSX.Element => {
+export const RaDecTable = ({ reload }: { reload: boolean }): JSX.Element => {
   // #add-component
   const locationService = useLocationService()
   const [raDecValues, setRaValues] = useState<RaDecResponse[]>()
@@ -42,7 +42,7 @@ export const RaDecTable = (): JSX.Element => {
       const backendUrl = await getBackendUrl(locationService)
       if (backendUrl) {
         const raDecValues = await getRaDecValues(backendUrl)
-        console.error('raDecValues', raDecValues)
+        console.log('raDecValues', raDecValues)
         setRaValues(raDecValues)
       } else {
         errorMessage('Failed to fetch ra values')
@@ -50,7 +50,7 @@ export const RaDecTable = (): JSX.Element => {
     }
 
     fetchRaValues()
-  }, [locationService])
+  }, [reload, locationService])
 
   // #add-component
   return (

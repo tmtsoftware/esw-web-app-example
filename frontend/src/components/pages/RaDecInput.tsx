@@ -8,11 +8,17 @@ import { getBackendUrl } from '../../utils/resolveBackend'
 // #input-imports
 
 // #add-component
-export const RaDecInput = (): JSX.Element => {
-// #use-location-service-from-context
+export const RaDecInput = ({
+  reload,
+  setReload
+}: {
+  reload: boolean
+  setReload: (s: boolean) => void
+}): JSX.Element => {
+  // #use-location-service-from-context
   const locationService = useLocationService()
   // #use-location-service-from-context
-    // #add-component
+  // #add-component
 
   // #use-fetch
   const onFinish = async (values: RaDecRequest) => {
@@ -23,6 +29,7 @@ export const RaDecInput = (): JSX.Element => {
     }
     if (backendUrl) {
       const response = await postRaDecValues(backendUrl, valueInDecimal)
+      setReload(!reload)
       if (response?.formattedRa && response?.formattedDec) {
         console.log(response.formattedRa)
         console.log(response.formattedDec)
