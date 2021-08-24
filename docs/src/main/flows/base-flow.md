@@ -207,6 +207,13 @@ cs install csw-services:v4.0.0-M1
 csw-services start -k 
 ```
 
+Set `INTERFACE_NAME` and `AAS_INTERFACE_NAME` environment variables with Network interface of your machine, these are needed during startup of the application, so that it is able to connect to location service and register its ip address.
+
+* During development in your local machine, these can point to same Network interface
+* During production deployment, these should point to respective Network interface
+
+For more details, refer CSW [environment variables](https://tmtsoftware.github.io/csw/deployment/env-vars.html) and [network topology](https://tmtsoftware.github.io/csw/deployment/network-topology.html)
+
 Try running our backend application
 
 ```bash
