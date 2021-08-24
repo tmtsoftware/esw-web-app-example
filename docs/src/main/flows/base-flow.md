@@ -413,7 +413,6 @@ $:frontend> npm start
 It will launch application in your default browser with an input form.
 
 * Add a value like '2.13' and '2.18' and click Submit.
-* Refresh the page
 * You will see the formatted RA and Dec values in the table below the input form.
 
 To build the application for its production deployment
