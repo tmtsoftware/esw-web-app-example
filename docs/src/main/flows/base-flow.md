@@ -1,12 +1,13 @@
 # Creating a Web Application
+
 This flow demonstrates how to use the template to create our project, how to add simple routes, UI components, 
 and how to build and test it. 
 
 In this tutorial, we will first generate the application from the template, and build it to ensure tools are in place. 
-Then, we will delete the default implementation and replace it our own implementation of a coordinate formatter.  To 
+Then, we will delete the default implementation and replace it with our own implementation of a coordinate formatter. To 
 do this, we will delete much of the template code and rewrite our own classes custom to our implementation.
 
-## Generate application
+## Generate Application
 
 First we need to generate a scaffolding application using our giter8 template:
 
@@ -14,27 +15,37 @@ First we need to generate a scaffolding application using our giter8 template:
 g8 tmtsoftware/esw-web-app-template.g8 --name=sample
 ```
 
-It will generate a sample folder with two sub-folders, `frontend` and `backend`.  For a sanity check, let's go ahead and 
+This will generate a sample folder with two sub-folders, `frontend` and `backend`.  For a sanity check, let's go ahead and 
 build the front and back ends created by the template.  This will also help ensure you have the necessary tools installed.
 
 You are welcome to try out the generated sample project, which is basically a "Hello World" application, by following
 the  instructions in the READMEs in each sub-folder. 
 
-### Compile the frontend
+### Compile the Frontend
 
 The `frontend` sub-folder is where your frontend application is located.  It uses Typescript, React and node.
-Make sure node is installed in your machine. Let's compile our generated application.
+Make sure node is installed in your machine ***AND HAS THE PROPER VERISON***. Let's compile our generated application.
 
 ```bash
 cd sample/frontend
 npm install
 npm run build
 ```
+@@@ note
+This tutorial uses the current ESW.UISTD selections for user interface languages, libraries, and tools. These are the current selections.
+They will be reviewed and updated once again as part of ESW Phase 2.
+@@@
 
-### Compile the backend
+### Compile the Backend
 
 The `backend` sub-folder is where your backend application is located.  It uses the Scala ecosystem, which uses [sbt](https://www.scala-sbt.org/) as its build tool.
-Make sure [coursier](https://tmtsoftware.github.io/csw/apps/csinstallation.html), OpenJDK 11 and the latest version of sbt version are installed in your machine.
+Make sure [coursier](https://tmtsoftware.github.io/csw/apps/csinstallation.html), [Adopt OpenJDK 11](https://adoptopenjdk.net/), and the latest version of [sbt](https://www.scala-sbt.org/) 
+are installed in your machine.
+
+@@@ note
+For a very smooth setup experience, the coursier tool can be used to do all of these installations in one step as described [here](https://www.scala-lang.org/2020/06/29/one-click-install.html).
+@@@
+
 Let's compile our generated application.
 
 ```bash
@@ -43,23 +54,32 @@ sbt
 sbt:backend> compile
 ```
 
-## Open in development environment
+## Open in Development Environment
 
-At this point, you may want to open the project in an Integrated Development Environment, such as Intellij, 
+At this point, you may want to open the project in an Integrated Development Environment (IDE), such as Intellij, 
 if you are using one. 
 
 In Intellij, you do this by clicking on File->New Project from Existing Sources... 
 and then browsing to the root directory, `sample`.  It should have a build.sbt file in it.
-Create an sbt project, and then accept the defaults, making sure the JDK is set to your installation of 
+Create an sbt-based project, and then accept the defaults, making sure the JDK is set to your installation of 
 OpenJDK 11.
 
 ## Develop Backend
-We will start with the backend HTTP service first.  We will start by deleting the existing application and then
-creating our custom code.  Our backend will be written in Scala, so all Java code will be removed.
+We will start with the backend HTTP service first. We will start by deleting the existing application and then
+create our custom code.  Our backend will be written in Scala, so all Java code will be removed.
+
+In ESW, a specialized backend service is only needed in the cases where the application has complicated or compute-expensive
+tasks that can not be satisfied by CSW-based components. In this case, an application-specific backend is created that is
+dedicated to the application UI and only provides the needed application functionality.
+
+@@@ note
+Many web application frontend user interfaces will also send commands to control system CSW components through
+the User Interface Gateway.
+@@@
 
 ### Cleanup existing sample
 
-To remove the generated code from the sample application, go to the `backend` folder and:
+To remove the generated code from the template sample application, go to the `backend` folder and:
 
 * Delete the folders `src/main/java` ,`src/test`
 
@@ -72,10 +92,12 @@ Browse to `src/main/scala/org/tmt/sample` and
 
 ### Add our Models classes
 
-We will now create the models used by our application.  The first model is our request, in which we will take 
-a RA/Dec pair as decimals.  The other model is the response, which returns the pair as formatted Strings.  It also
+We will now create the models used by our application.  The first model is our request, the values that are sent to the backend, in which we will take 
+a RA/Dec pair as decimals.  The other model is the response from the backend, which returns the pair as formatted Strings.  It also
 includes a UUID String for the request.
-These model classes will be used to serialize and deserialize requests and responses.
+
+The request and response models must be put into a format that can be included in an HTTP request, which is this case is JSON. 
+These model classes will be used to serialize and deserialize requests and responses to and from JSON.
 
 * Go to `core/models` in `src`
 * Add `RaDecRequest.scala` model class
@@ -92,7 +114,7 @@ Scala
 
 Now we will create our backend logic.  First, we create the service API as a Scala trait.
 Our service will have two methods.  The first method will take the RA/Dec request, format it, and then return the response.
-Our server will also maintain a list of all requests, so the method will also store this pair as formatted strings.
+Our server will also maintain a list of all requests, so the first method will also store this pair as formatted strings in backend-side state.
 
 The second method returns this stored list of all processed RA/Dec pairs.
 
@@ -104,7 +126,7 @@ Scala
 : @@snip [RaDecService.scala](../../../../backend/src/main/scala/org/tmt/sample/service/RaDecService.scala) { #raDecService-contract }
 
 Now we will create the implementation class of this service.  We use the `Angle` class from CSW to create the 
-sexagesimal strings.
+sexagesimal string values.
 
 * Go to the `impl` package in `src`
 * Add `RaDecImpl.scala`
@@ -148,7 +170,7 @@ sbt:backend> compile
 ```
 
 ### Add a Route for our implementation
-Next, we will provide the routing that links our HTTP request methods on endpoints to backend server processing 
+Next, we will provide the routing that links our HTTP request methods or endpoints to backend server processing 
 created in our implementation class `RaDecImpl`.  
 
 First, we need to inject a reference to an implementation of our service API to the routes, so that the appropriate 
@@ -168,7 +190,7 @@ Scala
 : @@snip [SampleRoute.scala](../../../../backend/src/main/scala/org/tmt/sample/http/SampleRoute.scala) { #add-routes }
 
 @@@note
-The tilda (~) at the end, is used as a path concatenator in the Akka DSL.
+The tilda (~) at the end, is used to concatenate paths in the Akka DSL.
 You can safely remove it for now. However, in the following section of this tutorial we are going to add new routes to this file. At that point, you would want to add it again to concatenate multiple routes.
 @@@
 
@@ -189,7 +211,7 @@ After we add the route, it will show some compilation errors, to fix that we nee
 
 ### Add Codecs
 
-We are using [borer](https://sirthias.github.io/borer/) to serialize/deserialize. It has support for two formats: Json and Cbor(binary format)
+We are using [borer](https://sirthias.github.io/borer/) to serialize/deserialize. It has support for two formats: JSON and CBOR(binary format)
 
 Add the codecs in `HttpCodecs.scala`, along with imports for our models.
 
@@ -200,19 +222,20 @@ Scala
 
 ### Manually test our application
 
-Start the Location Service with the Authorization and Authentication Service (we will use auth in the next section of the tutorial)
+Start the Location Service with the Authorization and Authentication Service (we will use auth in the next section of the tutorial).
 
 ```bash
 cs install csw-services:v4.0.0-M1
 csw-services start -k 
 ```
 
-Set `INTERFACE_NAME` and `AAS_INTERFACE_NAME` environment variables with Network interface of your machine, these are needed during startup of the application, so that it is able to connect to location service and register its ip address.
+Set `INTERFACE_NAME` and `AAS_INTERFACE_NAME` environment variables with the Network interface of your machine. These are needed during startup of the application, so that it is able to connect to Location Service and register its IP address
+and location information.
 
-* During development in your local machine, these can point to same Network interface
-* During production deployment, these should point to respective Network interface
+* During development in your local machine, these can point to same Network interface.
+* During production deployment, these will point to a public (AAS_INTERFACE_NAME) and inside (INTERFACE_NAME) Network interface.
 
-For more details, refer CSW [environment variables](https://tmtsoftware.github.io/csw/deployment/env-vars.html) and [network topology](https://tmtsoftware.github.io/csw/deployment/network-topology.html)
+For more details, refer CSW [environment variables](https://tmtsoftware.github.io/csw/deployment/env-vars.html) and [network topology](https://tmtsoftware.github.io/csw/deployment/network-topology.html).
 
 Try running our backend application
 
@@ -220,7 +243,7 @@ Try running our backend application
 sbt:backend> run start
 ```
 
-If application is successfully started it, will show a log with the `server_ip` and `app_port` registered to the Location Service.
+If the application starts successfully, it will show log messages with the `server_ip` and `app_port` registered to the Location Service.
 
 Update `apptest.http` with the code below, replacing the `<server_ip>:<app_port>` with the ones for your server as 
 displayed in the log messages.  Then run the request to test your `raDecValues` POST route:
@@ -237,7 +260,7 @@ Content-Type: application/json
 
 ```
 
-Successful response contains the `formattedRa` and `formattedDec` values with a unique id.
+The successful response contains the `formattedRa` and `formattedDec` values with a unique id.
 
 ```bash
 {
@@ -269,7 +292,9 @@ A successful response contains a list with the previous formatted RA/DEC entry.
 Change the numbers in the POST test and run it again.  Then, run the GET test again, and you will see both entries 
 displayed in the list.
 
-## Create the frontend
+**Success!**
+
+## Create the Frontend
 
 In this section, we will be constructing a browser-based UI using React components in Typescript.  We will create
 components that allow the user to specify an RA/Dec pair, and then a Submit button that will send the data to our 
@@ -277,7 +302,12 @@ backend.  The response will then be rendered in UI components. We will also prov
 list of stored coordinates.  This section of the tutorial will show how to add and render custom components within the 
 application that act as clients to consume our backend routes.
 
-First, let's cleanup unwanted code:
+@@@ note
+The frontend tutorial uses functionality from the ESW-TS library.  Be sure and look at the documentation for ESW-TS once
+you start working on your own UI.  ESW-TS documentation can be found [here](http://tmtsoftware.github.io/esw-ts).
+@@@
+
+First, cleanup unwanted code from the template:
 
 * Go to the `components/pages` folder in `src` and delete all component files under this directory
 * Delete the folder `components/form`
@@ -286,7 +316,7 @@ First, let's cleanup unwanted code:
 
 ### Add models
 
-Now, we need to add Typescript models for the data we will send to and receive from our backend.
+Now, we need to add Typescript models for the data we will send to and receive from our backend:
 
 * Go to `Models.ts` in `src/models`
 * Delete existing model interfaces
@@ -295,9 +325,14 @@ Now, we need to add Typescript models for the data we will send to and receive f
 Typescript
 : @@snip [Models.ts](../../../../frontend/src/models/Models.ts) { #add-models }
 
+@@@ note
+Now we are in the Javascript world. Serializing as JSON allows information to be communicated from the JVM and Scala-based
+backend to the Javascript/Typescript browser environment.
+@@@
+
 ### Add Fetch
 
-Implement the the following methods to consume data from our POST and GET routes in the `api.ts` file.  These
+Implement the following methods to consume data from our POST and GET routes in the `api.ts` file.  These
 methods will be called by our React components and perform HTTP requests to the backend.  The `post` and `get` methods
 are defined in `Http.ts` and handle the formatting of the request method and arguments into a proper HTTP request, as
 well as formatting the response.
@@ -314,7 +349,7 @@ Typescript
 
 You will need the following imports: 
 
-Typscript
+Typescript
 
 : @@snip [api.ts](../../../../frontend/src/utils/api.ts) { #fetch-imports }
 
@@ -322,7 +357,11 @@ Typscript
 ### Create a React component
 
 The first component we will create is the form for entering a coordinate and submitting it to the backend server.
-We are using the [Ant Design](https://ant.design/) UI Component library for our components, so here we use an Ant.d Form.
+We are using the [Ant Design](https://ant.design/) UI component library for our components, so here we use an Ant.d Form.
+
+@@@ note
+Ant Design is the current ESW selection for a React-based UI component library.
+@@@
 
 * In the `pages` folder, create `RaDecInput.tsx`
 * Add a simple input form to the `RaDecInput` React component
@@ -341,8 +380,8 @@ This instance is required to get the URL of the backend service. It is part of a
 named `LocationServiceProvider`, defined in the `contexts` folder.  This is made available to our component 
 when we put the components together in `App.tsx`.  
 
-Finally, let's add an `onFinish` handler to specify the behavior when the submit button is pressed.  It will
-and use the `postRaDecValues` method in our component.  Insert this code above the `return` statement defined above.
+Finally, add an `onFinish` handler to specify the behavior when the submit button is pressed.  It will
+use the `postRaDecValues` method in our component.  Insert this code above the `return` statement defined above.
 
 Typescript
 : @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #use-fetch }
@@ -353,7 +392,7 @@ Typescript
 : @@snip [RaDecInput.tsx](../../../../frontend/src/components/pages/RaDecInput.tsx) { #input-imports }
 
 
-### Create table component
+### Create a table component
 
 In the `pages` folder, add a new component `RaDecTable.tsx` to display the RA/Dec values table.  Again, we are using
 an Ant.d component, `Table`:
@@ -361,18 +400,18 @@ an Ant.d component, `Table`:
 Typescript
 : @@snip [RaDecTable.tsx](../../../../frontend/src/components/pages/RaDecTable.tsx) { #add-component }
 
-The table will display a list of `RaDecResponse`s obtained from the backend server, described below.  
+The table will display a list of `RaDecResponse`s obtained from the backend server, described below.
 In this table, the key for rows will come from the `id` field of the response model.  
 
-The columns will be defined in a constant outside of this class.  Insert the following code above the `RaDecTable` declaration:
+The columns will be defined in a constant value outside of this class.  Insert the following code above the `RaDecTable` declaration:
 
 Typescript
 : @@snip [RaDecTable.tsx](../../../../frontend/src/components/pages/RaDecTable.tsx) { #add-columns }
 
 The data for the table will come from an `raDecValues` constant that gets populated using a 
 React [Hook](https://reactjs.org/docs/hooks-effect.html).  The `useEffect` hook is called whenever the component is 
-rendered.  In our hook, we call the method `getRaDecValues` which does the GET request to the backend, whose URL is obtained
-using the Location Service, obtained from the context.
+rendered.  In our hook we call the method `getRaDecValues`, which does the GET request to the backend, whose URL is obtained
+using the Location Service obtained from the context.
 
 Typescript
 : @@snip [RaDecTable.tsx](../../../../frontend/src/components/pages/RaDecTable.tsx) { #use-fetch }
