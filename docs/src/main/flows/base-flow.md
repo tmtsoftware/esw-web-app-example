@@ -24,7 +24,7 @@ the  instructions in the READMEs in each sub-folder.
 ### Compile the Frontend
 
 The `sample-frontend` sub-folder is where your frontend application is located.  It uses Typescript, React and node.
-Make sure node is installed in your machine ***AND HAS THE PROPER VERISON***. Let's compile our generated application.
+Make sure node version `v16.0.0` or higher is installed in your machine. Let's compile our generated application.
 
 ```bash
 cd sample/sample-frontend
