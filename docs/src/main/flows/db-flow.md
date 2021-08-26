@@ -26,6 +26,7 @@ Scala
 : @@snip [build.sbt](../../../../backend/build.sbt) { #add-db }
 
 ### Create a Database access class
+
 Now we can implement our database access code. Go to the `impl` package in backend and add a repository class `RaDecRepository.scala` 
 using the DSL context provided by JOOQ as part of the CSW Database Service.  This will be constructed and injected later
 in our wiring.
@@ -111,7 +112,7 @@ application database must be initially configured with to work with our applicat
 ### Database setup
 
 Follow the installation guide to download and install PostgreSQL on your machine, if not already installed
-[Link](https://www.postgresql.org/download/). See also the CSW documentation.
+[Link](https://www.postgresql.org/download/). See also the CSW documentation. For linux specific troubleshooting [refer](https://github.com/tmtsoftware/csw/blob/master/docs/src/main/services/database.md#database-service)
 
 At this point, we will re-run `csw-services` with the CSW Database Service enabled.  This will run a PostgreSQL
 instance that we can then configure.
@@ -163,7 +164,7 @@ export DB_USERNAME=<VALUE> DB_PASSWORD=<VALUE>
 Now, we are ready to run the backend application:
 
 ```bash
-sbt:backend> run start
+sbt:sample-backend> run start
 ```
 
 Test your application either with the UI or by using `apptest.http` as described in previous tutorials,

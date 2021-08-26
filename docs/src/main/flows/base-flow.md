@@ -15,7 +15,7 @@ First we need to generate a scaffolding application using our giter8 template:
 g8 tmtsoftware/esw-web-app-template.g8 --name=sample
 ```
 
-This will generate a sample folder with two sub-folders, `frontend` and `backend`.  For a sanity check, let's go ahead and 
+This will generate a sample folder with two sub-folders, `sample-frontend` and `sample-backend`.  For a sanity check, let's go ahead and 
 build the front and back ends created by the template.  This will also help ensure you have the necessary tools installed.
 
 You are welcome to try out the generated sample project, which is basically a "Hello World" application, by following
@@ -23,11 +23,11 @@ the  instructions in the READMEs in each sub-folder.
 
 ### Compile the Frontend
 
-The `frontend` sub-folder is where your frontend application is located.  It uses Typescript, React and node.
+The `sample-frontend` sub-folder is where your frontend application is located.  It uses Typescript, React and node.
 Make sure node is installed in your machine ***AND HAS THE PROPER VERISON***. Let's compile our generated application.
 
 ```bash
-cd sample/frontend
+cd sample/sample-frontend
 npm install
 npm run build
 ```
@@ -38,7 +38,7 @@ They will be reviewed and updated once again as part of ESW Phase 2.
 
 ### Compile the Backend
 
-The `backend` sub-folder is where your backend application is located.  It uses the Scala ecosystem, which uses [sbt](https://www.scala-sbt.org/) as its build tool.
+The `sample-backend` sub-folder is where your backend application is located.  It uses the Scala ecosystem, which uses [sbt](https://www.scala-sbt.org/) as its build tool.
 Make sure [coursier](https://tmtsoftware.github.io/csw/apps/csinstallation.html), [Adopt OpenJDK 11](https://adoptopenjdk.net/), and the latest version of [sbt](https://www.scala-sbt.org/) 
 are installed in your machine.
 
@@ -49,9 +49,9 @@ For a very smooth setup experience, the coursier tool can be used to do all of t
 Let's compile our generated application.
 
 ```bash
-cd sample/backend
+cd sample/sample-backend
 sbt
-sbt:backend> compile
+sbt:sample-backend> compile
 ```
 
 ## Open in Development Environment
@@ -65,6 +65,7 @@ Create an sbt-based project, and then accept the defaults, making sure the JDK i
 OpenJDK 11.
 
 ## Develop Backend
+
 We will start with the backend HTTP service first. We will start by deleting the existing application and then
 create our custom code.  Our backend will be written in Scala, so all Java code will be removed.
 
@@ -79,7 +80,7 @@ the User Interface Gateway.
 
 ### Cleanup existing sample
 
-To remove the generated code from the template sample application, go to the `backend` folder and:
+To remove the generated code from the template sample application, go to the `sample-backend` folder and:
 
 * Delete the folders `src/main/java` ,`src/test`
 
@@ -139,7 +140,7 @@ Scala
 Now, lets try to compile our code
 
 ```bash
-sbt:backend> compile
+sbt:sample-backend> compile
 ```
 You will notice it will give some compilation errors here.  To fix these:
 
@@ -166,10 +167,11 @@ Be sure to delete references to deleted classes from import statements as well.
 Try compiling code again, this time it should compile successfully.
 
 ```bash
-sbt:backend> compile
+sbt:sample-backend> compile
 ```
 
 ### Add a Route for our implementation
+
 Next, we will provide the routing that links our HTTP request methods or endpoints to backend server processing 
 created in our implementation class `RaDecImpl`.  
 
@@ -233,14 +235,14 @@ Set `INTERFACE_NAME` and `AAS_INTERFACE_NAME` environment variables with the Net
 and location information.
 
 * During development in your local machine, these can point to same Network interface.
-* During production deployment, these will point to a public (AAS_INTERFACE_NAME) and inside (INTERFACE_NAME) Network interface.
+* During production deployment, these will point to a outside (AAS_INTERFACE_NAME) and inside (INTERFACE_NAME) Network interface.
 
 For more details, refer CSW [environment variables](https://tmtsoftware.github.io/csw/deployment/env-vars.html) and [network topology](https://tmtsoftware.github.io/csw/deployment/network-topology.html).
 
 Try running our backend application
 
 ```bash
-sbt:backend> run start
+sbt:sample-backend> run start
 ```
 
 If the application starts successfully, it will show log messages with the `server_ip` and `app_port` registered to the Location Service.
@@ -446,7 +448,7 @@ Typescript
 Now, we have linked all pieces of our frontend application.
 
 ```bash
-$:frontend> npm start
+$:sample-frontend> npm start
 ```
 
 It will launch application in your default browser with an input form.
@@ -457,5 +459,5 @@ It will launch application in your default browser with an input form.
 To build the application for its production deployment
 
 ```bash
-$:frontend> npm run build
+$:sample-frontend> npm run build
 ```

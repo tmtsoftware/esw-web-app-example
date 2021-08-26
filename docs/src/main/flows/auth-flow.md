@@ -9,6 +9,7 @@ can change the control system must be protected with the correct level of author
 integrate authentication and authorization through the use of CSW AAS Service.
 
 ## Add a Protected Route in Backend
+
 To demonstrate authorization, we will need to create a "protected" route, that is, an endpoint that requires a
 valid authorization token to access.
 
@@ -36,6 +37,7 @@ Scala
 : @@snip [SampleRoute.scala](../../../../backend/src/main/scala/org/tmt/sample/http/SampleRoute.scala) { #add-secured-route }
 
 ## Consume a Protected Route in the Frontend
+
 Now, we will create a component in our frontend UI that uses our protected route.
 
 ### Add secured Post
