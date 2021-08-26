@@ -7,7 +7,7 @@ ThisBuild / docsRepo := "https://github.com/tmtsoftware/tmtsoftware.github.io.gi
 ThisBuild / docsParentDir := "esw-web-app-example"
 ThisBuild / gitCurrentRepo := "https://github.com/tmtsoftware/esw-web-app-example"
 
-ThisBuild / version := {
+version := {
   sys.props.get("prod.publish") match {
     case Some("true") => version.value
     case _            => "0.1.0-SNAPSHOT"
