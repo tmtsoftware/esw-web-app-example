@@ -57,10 +57,12 @@ sbt:sample-backend> compile
 ## Open in Development Environment
 
 At this point, you may want to open the project in an Integrated Development Environment (IDE), such as Intellij, 
-if you are using one. 
+if you are using one.  The template creates two projects, a Scala/sbt-based backend amd a Typescript/npm-based frontend,
+and because the two projects have different build systems, it is better to open each part, the frontend and backend, 
+in separate IDE projects.  We recommend Intellij for the backend, and VS Code or Intellij for the frontend. 
 
-In Intellij, you do this by clicking on File->New Project from Existing Sources... 
-and then browsing to the root directory, `sample`.  It should have a build.sbt file in it.
+To open the backend in Intellij, click on File->New Project from Existing Sources... 
+and then browsing to the backend directory, `sample/sample-backend`.  It should have a build.sbt file in it.
 Create an sbt-based project, and then accept the defaults, making sure the JDK is set to your installation of 
 OpenJDK 11.
 
@@ -247,8 +249,10 @@ sbt:sample-backend> run start
 
 If the application starts successfully, it will show log messages with the `server_ip` and `app_port` registered to the Location Service.
 
+The template includes a file, `apptest.http`, that can be used to run HTTP requests in Intellij.
 Update `apptest.http` with the code below, replacing the `<server_ip>:<app_port>` with the ones for your server as 
-displayed in the log messages.  Then run the request to test your `raDecValues` POST route:
+displayed in the log messages.  Then run the request by clicking the green arrow next to the request
+to test your `raDecValues` POST route:
 
 ```bash
 #### Request to test raDecValues endpoint
@@ -424,7 +428,7 @@ Typescript
 : @@snip [RaDecTable.tsx](../../../../frontend/src/components/pages/RaDecTable.tsx) { #table-imports }
 
 
-### Putting out components together
+### Putting our components together
 
 In the `pages` folder, add a new component `RaDec.tsx` to compose the components created above and display in a page
 
@@ -456,7 +460,8 @@ It will launch application in your default browser with an input form.
 * Add a value like '2.13' and '2.18' and click Submit.
 * You will see the formatted RA and Dec values in the table below the input form.
 
-To build the application for its production deployment
+To build the application for its production deployment.  This will create a `dist` folder with all the necessary
+class files to run the application, which can be copied to the production web server.
 
 ```bash
 $:sample-frontend> npm run build

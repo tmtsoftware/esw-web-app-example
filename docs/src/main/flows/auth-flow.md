@@ -80,7 +80,7 @@ Don't forget to add the necessary imports!
 
 ### Connect our new component
 
-Next, we will add the protected route in `Routes.tsx` within the `<Switch>` block.
+Next, we will add the protected route in `Routes.tsx` within the `<Switch>` block, before the catch-all `*` route.
 
 Typescript
 : @@snip [Routes.tsx](../../../../frontend/src/routes/Routes.tsx) { #add-protected-route }

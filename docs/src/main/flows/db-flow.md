@@ -27,7 +27,7 @@ Scala
 
 ### Create a Database access class
 
-Now we can implement our database access code. Go to the `impl` package in backend and add a repository class `RaDecRepository.scala` 
+Now we can implement our database access code. Go to the `impl` package in the backend and add a repository class `RaDecRepository.scala` 
 using the DSL context provided by JOOQ as part of the CSW Database Service.  This will be constructed and injected later
 in our wiring.
 
@@ -146,9 +146,9 @@ The following commands can be used to create a table:
 ```bash
 postgres =>
 CREATE TABLE RADECVALUES(
-id TEXT             PRIMARY KEY     NOT NULL,
-formattedRa TEXT                    NOT NULL,
-formattedDec TEXT                    NOT NULL
+id           TEXT             PRIMARY KEY,
+formattedRa  TEXT             NOT NULL,
+formattedDec TEXT             NOT NULL
 );
 ```
 
@@ -171,5 +171,5 @@ Test your application either with the UI or by using `apptest.http` as described
 and verify the data is saved in your postgres table.  This can be done in `psql` using the `TABLE` command:
 
 ```bash
-postgres => TABLE RADECVALUES
+postgres => SELECT * FROM RADECVALUES;
 ```
