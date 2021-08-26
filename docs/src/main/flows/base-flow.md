@@ -460,9 +460,11 @@ It will launch application in your default browser with an input form.
 * Add a value like '2.13' and '2.18' and click Submit.
 * You will see the formatted RA and Dec values in the table below the input form.
 
-To build the application for its production deployment.  This will create a `dist` folder with all the necessary
-class files to run the application, which can be copied to the production web server.
+To build the application for its production deployment, use the npm command:
 
 ```bash
 $:sample-frontend> npm run build
 ```
+
+This will create a `dist` folder with all the necessary
+class files to run the application, which can be copied to the production web server for deployment.
