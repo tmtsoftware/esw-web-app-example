@@ -108,9 +108,23 @@ Typescript
 
 ## Try It Out!
 
-Compile the backend and restart it.  Then run the UI as before and try it out.  Clicking on the `SecuredRaDec` menu
-item will take you to the login page. Be sure to log in with the`esw-user1` user with the password `esw-user1`.  Once
-logged in, you will be able to use this form.  The behavior is the same as the non-secured version, but it gives you 
-the idea of how pages and routes can be protected.  You will have to switch to the `RaDec` tab to see your inputs.
+Compile the backend and restart it.  Then run the UI as before and try it out.
+
+Notice the menu bar shows a "Login" item, since we haven't logged in
+
+![Menu Bar with Login](webAppMenuLogin.png)
+
+Clicking on the "Login" (or "SecuredRaDec") menu item will take you to the login page. 
+Be sure to log in with the`esw-user1` user with the password `esw-user1`.  
+
+You may note the "Login" menu item has changed to "Logout". 
+
+![Menu Bar with Logout](webAppMenuLogout.png)
+
+Once logged in, you will be able to use the SecuredRaDec form.  The behavior is the same as the non-secured version, 
+but it gives you the idea of how pages and routes can be protected. 
+
+
+
 
 **Nice Work!**

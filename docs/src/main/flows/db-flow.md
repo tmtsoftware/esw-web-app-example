@@ -19,6 +19,10 @@ Add a `csw-database` dependency in `project/Libs.scala`
 Scala
 : @@snip [Libs.scala](../../../../backend/project/Libs.scala) { #add-db }
 
+@@@note
+In this example, we use version 3.0.1 of CSW, but any later version will work as well.
+@@@
+
 Use the `csw-database` dependency in your `build.sbt` file and reload the project in your IDE (in IntelliJ, this can be
 done from the sbt tab, typically on the right side of the IDE).  Or type `reload` at the sbt prompt.
 
