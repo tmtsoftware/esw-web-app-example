@@ -1,4 +1,4 @@
-import { AuthContextProvider, LocationService } from '@tmtsoftware/esw-ts'
+import { AuthContextProvider, LocationService, loadGlobalConfig } from '@tmtsoftware/esw-ts'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'antd/dist/antd.css'
@@ -9,25 +9,25 @@ import { useQuery } from './hooks/useQuery'
 import { Routes } from './routes/Routes'
 
 const basename =
-  import.meta.env.NODE_ENV === 'production' ? AppConfig.applicationName : ''
+  import.meta.env.NODE_ENV === 'production'
+    ? `/${AppConfig.applicationName}`
+    : ''
 
 export const App = (): JSX.Element => {
-  const { data: locationService, loading, error } = useQuery(LocationService)
+  const { data: initialised, error } = useQuery(() => loadGlobalConfig().then(() => true))
+  const locationService = LocationService()
 
-  if (loading) return <div>Loading...</div>
-  if (error || !locationService)
-    return <div>Location Service not Available, reason {error?.message}</div>
-
-  return (
-    <div>
-      <LocationServiceProvider locationService={locationService}>
-        <AuthContextProvider>
-          <Router basename={basename}>
-            <MenuBar />
-            <Routes />
-          </Router>
-        </AuthContextProvider>
-      </LocationServiceProvider>
-    </div>
+  if (error) return <div> Failed to load global config </div>
+  return initialised ? (
+    <LocationServiceProvider locationService={locationService}>
+      <AuthContextProvider>
+        <Router basename={basename}>
+          <MenuBar />
+          <Routes />
+        </Router>
+      </AuthContextProvider>
+    </LocationServiceProvider>
+  ) : (
+    <div>Loading....</div>
   )
 }
