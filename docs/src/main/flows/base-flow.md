@@ -229,7 +229,7 @@ Scala
 Start the Location Service with the Authorization and Authentication Service (we will use auth in the next section of the tutorial).
 
 ```bash
-cs install csw-services:v4.0.0-M1
+cs install csw-services
 csw-services start -k 
 ```
 

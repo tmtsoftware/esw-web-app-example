@@ -130,7 +130,7 @@ Postgres data directory where Postgres is installed e.g. for mac: “/usr/local/
 @@@
 
 ```bash
-cs install csw-services:v4.0.0-M1
+cs install csw-services
 csw-services start -k -d
 ```
 
