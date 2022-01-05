@@ -32,7 +32,7 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
   implicit val ec: ExecutionContext                            = actorSystem.executionContext
   override implicit val patienceConfig: PatienceConfig         = PatienceConfig(10.seconds)
 
-  val locationService: LocationService = frameworkTestKit.frameworkWiring.locationService
+  val locationService: LocationService = frameworkTestKit.locationService
   val hostname: String                 = Networks().hostname
   val keycloakPort                     = 8081
   val sampleAppPort                    = 8085
@@ -72,8 +72,8 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
       val response: HttpResponse = Http().singleRequest(request).futureValue
       response.status should ===(StatusCode.int2StatusCode(200))
       val reDecResponse = Unmarshal(response).to[RaDecResponse].futureValue
-      reDecResponse.formattedRa should ===("8h 8m 9.602487087684134s")
-      reDecResponse.formattedDec should ===(s"124°54'17.277618670114634\"")
+      reDecResponse.formattedRa should ===("2h 7m 48s")
+      reDecResponse.formattedDec should ===(s"2°10'48\"")
     }
     // #add-route-test
 
@@ -91,8 +91,8 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
       val response: HttpResponse = Http().singleRequest(request).futureValue
       response.status should ===(StatusCode.int2StatusCode(200))
       val reDecResponse = Unmarshal(response).to[RaDecResponse].futureValue
-      reDecResponse.formattedRa should ===("8h 8m 9.602487087684134s")
-      reDecResponse.formattedDec should ===(s"124°54'17.277618670114634\"")
+      reDecResponse.formattedRa should ===("2h 7m 48s")
+      reDecResponse.formattedDec should ===(s"2°10'48\"")
     }
     // #add-secured-route-test
 

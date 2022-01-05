@@ -18,7 +18,7 @@ lazy val `backend` = project
       // #add-db
       Libs.`scalatest`                % Test,
       Libs.`akka-http-testkit`        % Test,
-      Libs.`mockito-scala`            % Test,
+      Libs.`mockito`                  % Test,
       Libs.`akka-actor-testkit-typed` % Test,
       Libs.`akka-stream-testkit`      % Test
     ),
