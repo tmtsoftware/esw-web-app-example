@@ -1,7 +1,8 @@
 // #add-test
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { HttpConnection, HttpLocation, Prefix } from '@tmtsoftware/esw-ts'
+import { Prefix, HttpConnection } from '@tmtsoftware/esw-ts'
+import type { HttpLocation } from '@tmtsoftware/esw-ts'
 import { expect } from 'chai'
 import React from 'react'
 import { anything, capture, deepEqual, verify, when } from 'ts-mockito'

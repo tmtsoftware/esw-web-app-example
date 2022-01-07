@@ -1,4 +1,8 @@
-import { AuthContextProvider, LocationService, loadGlobalConfig } from '@tmtsoftware/esw-ts'
+import {
+  AuthContextProvider,
+  LocationService,
+  loadGlobalConfig
+} from '@tmtsoftware/esw-ts'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'antd/dist/antd.css'
@@ -14,7 +18,9 @@ const basename =
     : ''
 
 export const App = (): JSX.Element => {
-  const { data: initialised, error } = useQuery(() => loadGlobalConfig().then(() => true))
+  const { data: initialised, error } = useQuery(() =>
+    loadGlobalConfig().then(() => true)
+  )
   const locationService = LocationService()
 
   if (error) return <div> Failed to load global config </div>

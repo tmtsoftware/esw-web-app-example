@@ -1,5 +1,6 @@
 import type { LocationService } from '@tmtsoftware/esw-ts'
-import React, { createContext, PropsWithChildren, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
+import type { PropsWithChildren } from 'react'
 
 const LocationServiceContext = createContext<LocationService | undefined>(
   undefined

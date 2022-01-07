@@ -1,4 +1,5 @@
-import { HttpConnection, LocationService, Prefix } from '@tmtsoftware/esw-ts'
+import { HttpConnection, Prefix } from '@tmtsoftware/esw-ts'
+import type { LocationService } from '@tmtsoftware/esw-ts'
 import { errorMessage } from './message'
 
 const backendServicePrefix = Prefix.fromString('ESW.sample')
