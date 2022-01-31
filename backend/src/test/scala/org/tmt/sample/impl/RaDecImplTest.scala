@@ -10,8 +10,8 @@ class RaDecImplTest extends AnyWordSpec with Matchers {
     "convert Ra and Dec to String" in {
       val raDecImpl     = new RaDecImpl()
       val response = raDecImpl.raDecToString(RaDecRequest(2.13, 2.18))
-      response.futureValue.formattedRa should ===("2h 7m 48s")
-      response.futureValue.formattedDec should ===(s"2°10'48\"")
+      response.futureValue.formattedRa should ===("02:07:48.000")
+      response.futureValue.formattedDec should ===("02:10:48.000")
     }
   }
 }
