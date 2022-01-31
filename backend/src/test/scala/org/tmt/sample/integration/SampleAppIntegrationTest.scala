@@ -72,7 +72,7 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
       val response: HttpResponse = Http().singleRequest(request).futureValue
       response.status should ===(StatusCode.int2StatusCode(200))
       val reDecResponse = Unmarshal(response).to[RaDecResponse].futureValue
-      reDecResponse.formattedRa should ===("2h 7m 48s")
+      reDecResponse.formattedRa should ===("02:07:48.000")
       reDecResponse.formattedDec should ===(s"2°10'48\"")
     }
     // #add-route-test
@@ -91,7 +91,7 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
       val response: HttpResponse = Http().singleRequest(request).futureValue
       response.status should ===(StatusCode.int2StatusCode(200))
       val reDecResponse = Unmarshal(response).to[RaDecResponse].futureValue
-      reDecResponse.formattedRa should ===("2h 7m 48s")
+      reDecResponse.formattedRa should ===("02:07:48.000")
       reDecResponse.formattedDec should ===(s"2°10'48\"")
     }
     // #add-secured-route-test
