@@ -9,11 +9,11 @@ import { getBackendUrl } from '../../utils/resolveBackend'
 
 // #add-component
 export const RaDecInput = ({
-  reload,
-  setReload
+  reload = true,
+  setReload = () => ({})
 }: {
-  reload: boolean
-  setReload: (s: boolean) => void
+  reload?: boolean
+  setReload?: (s: boolean) => void
 }): JSX.Element => {
   // #use-location-service-from-context
   const locationService = useLocationService()
