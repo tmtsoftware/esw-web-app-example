@@ -11,10 +11,11 @@ import csw.location.api.models._
 import csw.prefix.models.Prefix
 import io.bullet.borer.compat.AkkaHttpCompat
 import msocket.security.models.AccessToken
-import org.mockito.MockitoSugar.{mock, reset, verify, when}
+import org.mockito.Mockito.{reset, verify, when}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar.mock
 import org.tmt.sample.TestHelper
 import org.tmt.sample.core.models.{RaDecRequest, RaDecResponse}
 import org.tmt.sample.impl.RaDecImpl
