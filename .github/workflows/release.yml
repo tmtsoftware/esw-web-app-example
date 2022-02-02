@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: coursier/setup-action@v1
+      - uses: coursier/setup-action@v1.2.0-M2
         with:
           jvm: 11
           apps: sbt sbtn
@@ -27,10 +27,6 @@ jobs:
         with:
           #strip `v` prefix
           strip_v: true
-
-      # This env variable is used when we do Docs Publish
-      - name: Set JITPACK_VERSION environment variable
-        run: echo "JITPACK_VERSION=${{steps.tag.outputs.tag}}" >> $GITHUB_ENV
 
       - name: Build Backend
         working-directory: backend
@@ -51,6 +47,10 @@ jobs:
       - name: Test Frontend
         working-directory: frontend
         run: npm run test
+
+      # This env variable is used when we do Docs Publish
+      - name: Set JITPACK_VERSION environment variable
+        run: echo "JITPACK_VERSION=${{steps.tag.outputs.tag}}" >> $GITHUB_ENV
 
       - name: Docs Publish
         run: |
