@@ -1,9 +1,9 @@
 import sbt._
 
 object Libs {
-  val `esw-http-template-wiring` = "com.github.tmtsoftware.esw" %% "esw-http-template-wiring" % "0.4.0-RC1"
+  val `esw-http-template-wiring` = "com.github.tmtsoftware.esw" %% "esw-http-template-wiring" % "0.4.0"
   // #add-db
-  val `csw-database` = "com.github.tmtsoftware.csw" %% "csw-database" % "4.0.1-RC1"
+  val `csw-database` = "com.github.tmtsoftware.csw" %% "csw-database" % "4.0.1"
   // #add-db
 
   //testing
