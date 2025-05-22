@@ -10,7 +10,7 @@ import { getBackendUrl } from '../../utils/resolveBackend'
 // #table-imports
 
 //  #add-columns
-const HeaderTitle = ({ title }: { title: string }): JSX.Element => (
+const HeaderTitle = ({ title }: { title: string }): React.JSX.Element => (
   <Typography.Title level={5} style={{ marginBottom: 0 }}>
     {title}
   </Typography.Title>
@@ -32,7 +32,11 @@ const columns: ColumnsType<RaDecResponse> = [
 
 // #use-fetch
 // #add-component
-export const RaDecTable = ({ reload }: { reload: boolean }): JSX.Element => {
+export const RaDecTable = ({
+  reload
+}: {
+  reload: boolean
+}): React.JSX.Element => {
   // #add-component
   const locationService = useLocationService()
   const [raDecValues, setRaValues] = useState<RaDecResponse[]>()

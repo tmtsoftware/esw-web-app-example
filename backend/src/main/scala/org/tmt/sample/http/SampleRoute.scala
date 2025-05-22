@@ -1,7 +1,7 @@
 package org.tmt.sample.http
 
-import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Route
 import csw.aas.http.AuthorizationPolicy.RealmRolePolicy
 import csw.aas.http.SecurityDirectives
 import org.tmt.sample.core.models.RaDecRequest
@@ -30,11 +30,9 @@ class SampleRoute(raDecService: RaDecService, securityDirectives: SecurityDirect
     // #add-routes
     // #add-secured-route
     path("securedRaDecValues") {
-      post {
-        securityDirectives.sPost(RealmRolePolicy("Esw-user")) { _ =>
-          entity(as[RaDecRequest]) { raDecRequest =>
-            complete(raDecService.raDecToString(raDecRequest))
-          }
+      securityDirectives.sPost(RealmRolePolicy("Esw-user")) { _ =>
+        entity(as[RaDecRequest]) { raDecRequest =>
+          complete(raDecService.raDecToString(raDecRequest))
         }
       }
     }

@@ -7,4 +7,4 @@
 4. update `esw-ts` versions in `package.json` of `frontend` project
 5. Run `npm install` in `frontend` project, so that `package-lock.json` also gets updated version.
 6. Commit and push your changes
-7. create appropriate release tag using git and push the tag e.g. `git tag v0.1.0-RC1` and `git push origin v0.1.0-RC1`
+7. create the appropriate release tag using git and push the tag e.g. `git tag v0.1.0-RC1` and `git push origin v0.1.0-RC1`

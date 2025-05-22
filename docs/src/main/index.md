@@ -1,6 +1,6 @@
 # ESW Web Application Tutorial
 
-In the ESW user interface design a web application is used when the user interface has special requirements that are not
+In the ESW user interface design, a web application is used when the user interface has special requirements that are not
 met by the interfaces to the control system provided by the User Interface Gateway. For instance, a web application
 should be used if specific application processing is needed or the UI needs results from a database using CSW Database
 Service.

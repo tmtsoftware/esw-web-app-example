@@ -8,7 +8,7 @@ import { errorMessage } from '../../utils/message'
 import { getBackendUrl } from '../../utils/resolveBackend'
 // #add-component
 // #use-location-service-from-context
-export const SecuredRaDecInput = (): JSX.Element => {
+export const SecuredRaDecInput = (): React.JSX.Element => {
   // #add-component
   const locationService = useLocationService()
   const { auth } = useAuth()

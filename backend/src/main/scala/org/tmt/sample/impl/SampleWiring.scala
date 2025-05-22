@@ -1,6 +1,6 @@
 package org.tmt.sample.impl
 
-import akka.http.scaladsl.server.Route
+import org.apache.pekko.http.scaladsl.server.Route
 import esw.http.template.wiring.ServerWiring
 import org.tmt.sample.http.SampleRoute
 

@@ -1,7 +1,7 @@
 import { Result } from 'antd'
 import React from 'react'
 
-export const NotFound = (): JSX.Element => {
+export const NotFound = (): React.JSX.Element => {
   return (
     <Result
       status='404'

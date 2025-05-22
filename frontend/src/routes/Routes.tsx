@@ -5,14 +5,21 @@ import { RaDec } from '../components/pages/RaDec'
 import { SecuredRaDecInput } from '../components/pages/SecuredRaDecInput'
 import { ProtectedRoute } from './ProtectedRoute'
 
-export const Routes = (): JSX.Element => {
+export const Routes = (): React.JSX.Element => {
   return (
     <RouterRoutes>
       {/*// #add-route */}
       <Route path='/' element={<RaDec />} />
       {/*// #add-route */}
       {/*// #add-protected-route */}
-      <ProtectedRoute path='/securedRaDec' element={<SecuredRaDecInput />} />
+      <Route
+        path='/securedRaDec'
+        element={
+          <ProtectedRoute>
+            <SecuredRaDecInput />
+          </ProtectedRoute>
+        }
+      />
       {/*// #add-protected-route */}
       <Route path='*' element={<NotFound />} />
     </RouterRoutes>

@@ -9,27 +9,28 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: coursier/setup-action@v1.2.0-M2
+      - uses: actions/checkout@v4
+      - uses: coursier/setup-action@v1.2.0
         with:
-          jvm: temurin:1.17
-          apps: sbt sbtn
-      - uses: coursier/cache-action@v6.3
+          jvm: temurin:1.21
+          apps: sbt
+      - uses: coursier/cache-action@v6
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4.2.0
         with:
-          node-version: "16.x"
+          node-version: "22.15.0"
           registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@10.9.2
 
       - name: Build Backend
         working-directory: backend
         run: |
-          sbtn clean
-          sbtn test:compile
+          sbt clean
+          sbt test:compile
 
       - name: Tests Backend
         working-directory: backend
-        run: sbtn test
+        run: sbt test
 
       - name: Build Frontend
         working-directory: frontend

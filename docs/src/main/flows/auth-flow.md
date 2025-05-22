@@ -4,7 +4,7 @@ Like the User Interface Gateway, a web application backend is a boundary between
 control system. Because of this, a web application developer must be conscious of and support the authentication and authorization
 of its users according to the observatory security approach.  
 
-It's okay to have unprotected routes that are read-only and can not cause any changes, but any route that 
+It's okay to have unprotected routes that are read-only and cannot cause any changes, but any route that 
 can change the control system must be protected with the correct level of authorization. This flow describes how to
 integrate authentication and authorization through the use of CSW AAS Service.
 

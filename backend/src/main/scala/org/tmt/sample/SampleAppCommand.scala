@@ -7,7 +7,7 @@ sealed trait SampleAppCommand
 object SampleAppCommand {
 
   @CommandName("start")
-  final case class StartCommand(
+  final case class StartOptions(
      @HelpMessage("port of the app")
      @ExtraName("p")
      port: Option[Int]

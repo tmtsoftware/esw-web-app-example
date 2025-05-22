@@ -3,7 +3,7 @@ import { RaDecInput as RaDecInput } from './RaDecInput'
 import { RaDecTable as RaDecTable } from './RaDecTable'
 
 // #add-component
-export const RaDec = (): JSX.Element => {
+export const RaDec = (): React.JSX.Element => {
   const [reload, setReload] = useState<boolean>(false)
   return (
     <>

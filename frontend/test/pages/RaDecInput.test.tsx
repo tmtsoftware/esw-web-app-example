@@ -5,13 +5,20 @@ import { Prefix, HttpConnection } from '@tmtsoftware/esw-ts'
 import type { HttpLocation } from '@tmtsoftware/esw-ts'
 import { expect } from 'chai'
 import React from 'react'
-import { anything, capture, deepEqual, verify, when } from 'ts-mockito'
+import {
+  anything,
+  capture,
+  deepEqual,
+  verify,
+  when
+} from '@johanblumenberg/ts-mockito'
 import { RaDecInput } from '../../src/components/pages/RaDecInput'
 import {
   locationServiceMock,
   mockFetch,
   renderWithRouter
 } from '../utils/test-utils'
+import '@ant-design/v5-patch-for-react-19'
 
 describe('Ra Dec Input', () => {
   const connection = HttpConnection(Prefix.fromString('ESW.sample'), 'Service')
@@ -27,6 +34,7 @@ describe('Ra Dec Input', () => {
   )
 
   it('should render Input form and sent in to backend', async () => {
+    const user = userEvent.setup()
     const raInDecimals = 2.13
     const decInDecimals = 2.18
     const request = { raInDecimals, decInDecimals }
@@ -49,14 +57,14 @@ describe('Ra Dec Input', () => {
       'DecInDecimals'
     )) as HTMLInputElement
 
-    userEvent.type(raInput, raInDecimals.toString())
-    userEvent.type(decInput, decInDecimals.toString())
+    await user.type(raInput, raInDecimals.toString())
+    await user.type(decInput, decInDecimals.toString())
 
     const submitButton = (await screen.findByRole(
       'Submit'
     )) as HTMLButtonElement
 
-    await waitFor(() => userEvent.click(submitButton))
+    await waitFor(() => user.click(submitButton))
 
     verify(locationServiceMock.find(deepEqual(connection))).called()
     const [firstArg, secondArg] = capture(fetch).last()

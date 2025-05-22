@@ -4,13 +4,14 @@ import { AuthContext } from '@tmtsoftware/esw-ts'
 import type { Auth, TestUtils, LocationService } from '@tmtsoftware/esw-ts'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { instance, mock } from 'ts-mockito'
+import { instance, imock, mock } from '@johanblumenberg/ts-mockito'
 import { LocationServiceProvider } from '../../src/contexts/LocationServiceContext'
+import '@ant-design/v5-patch-for-react-19'
 
 class MockedFetch {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+
   fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {}
 }
 
@@ -20,7 +21,8 @@ export const mockFetch = (): typeof window.fetch => {
   return mockedFetch.fetch
 }
 
-export const locationServiceMock = mock<LocationService>()
+export const locationServiceMock = imock<LocationService>()
+export const locationServiceInstance = instance(locationServiceMock)
 
 const getMockAuth = (loggedIn: boolean): Auth => {
   let loggedInValue = loggedIn
@@ -30,20 +32,17 @@ const getMockAuth = (loggedIn: boolean): Auth => {
     isAuthenticated: () => loggedInValue,
     logout: () => {
       loggedInValue = false
-      return Promise.resolve() as TestUtils.KeycloakPromise<void, void>
+      return Promise.resolve() as Promise<void>
     },
     token: () => 'token string',
     tokenParsed: () =>
       ({
         preferred_username: loggedIn ? 'esw-user' : undefined
-      } as TestUtils.KeycloakTokenParsed),
+      }) as TestUtils.KeycloakTokenParsed,
     realmAccess: () => [''] as unknown as TestUtils.KeycloakRoles,
     resourceAccess: () => [''] as unknown as TestUtils.KeycloakResourceAccess,
     loadUserProfile: () =>
-      Promise.resolve({}) as TestUtils.KeycloakPromise<
-        TestUtils.KeycloakProfile,
-        void
-      >
+      Promise.resolve({}) as Promise<TestUtils.KeycloakProfile>
   }
 }
 
@@ -63,7 +62,7 @@ const renderWithAuth = (ui: React.ReactElement): RenderResult => {
 
 const renderWithLocationServiceContext = (ui: React.ReactElement) => {
   return renderWithAuth(
-    <LocationServiceProvider locationService={instance(locationServiceMock)}>
+    <LocationServiceProvider locationService={locationServiceInstance}>
       {ui}
     </LocationServiceProvider>
   )

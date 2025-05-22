@@ -14,7 +14,7 @@ export const RaDecInput = ({
 }: {
   reload?: boolean
   setReload?: (s: boolean) => void
-}): JSX.Element => {
+}): React.JSX.Element => {
   // #use-location-service-from-context
   const locationService = useLocationService()
   // #use-location-service-from-context

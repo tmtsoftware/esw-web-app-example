@@ -4,8 +4,8 @@ lazy val `backend` = project
   .settings(
     inThisBuild(
       List(
-        scalaVersion := "2.13.8",
-        version := "0.2.0"
+        scalaVersion := "3.6.4",
+        version := "0.3.0"
       )
     ),
     name := "backend",
@@ -16,11 +16,11 @@ lazy val `backend` = project
       Libs.`csw-database`, // <---
       Libs.`embedded-keycloak` % Test,
       // #add-db
-      Libs.`scalatest`                % Test,
-      Libs.`akka-http-testkit`        % Test,
-      Libs.`mockito`                  % Test,
-      Libs.`akka-actor-testkit-typed` % Test,
-      Libs.`akka-stream-testkit`      % Test
+      Libs.`scalatest`                 % Test,
+      Libs.`pekko-http-testkit`        % Test,
+      Libs.`mockito`                   % Test,
+      Libs.`pekko-actor-testkit-typed` % Test,
+      Libs.`pekko-stream-testkit`      % Test
     ),
     fork := true,
     Test / fork := false

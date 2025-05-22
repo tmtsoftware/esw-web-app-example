@@ -1,6 +1,6 @@
 package org.tmt.sample.impl.db
 
-import akka.http.scaladsl.server.Route
+import org.apache.pekko.http.scaladsl.server.Route
 import csw.database.DatabaseServiceFactory
 import esw.http.template.wiring.ServerWiring
 import org.jooq.DSLContext

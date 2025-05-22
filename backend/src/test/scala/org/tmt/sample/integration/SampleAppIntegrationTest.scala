@@ -1,14 +1,14 @@
 package org.tmt.sample.integration
 
-import akka.actor.typed.{ActorSystem, SpawnProtocol}
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.Uri.Path
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.unmarshalling.Unmarshal
+import org.apache.pekko.actor.typed.{ActorSystem, SpawnProtocol}
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.model.Uri.Path
+import org.apache.pekko.http.scaladsl.model.*
+import org.apache.pekko.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
+import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshal
 import csw.aas.core.commons.AASConnection
 import csw.location.api.models.Connection.HttpConnection
-import csw.location.api.models._
+import csw.location.api.models.*
 import csw.location.api.scaladsl.LocationService
 import csw.network.utils.Networks
 import csw.testkit.scaladsl.ScalaTestFrameworkTestKit
@@ -23,6 +23,7 @@ import org.tmt.sample.core.models.{RaDecRequest, RaDecResponse}
 import org.tmt.sample.http.HttpCodecs
 import org.tmt.sample.impl.SampleWiring
 
+import scala.compiletime.uninitialized
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext}
 
@@ -39,9 +40,9 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
   val sampleWiring                     = new SampleWiring(Some(sampleAppPort))
   val appConnection: HttpConnection    = sampleWiring.settings.httpConnection
 
-  var appLocation: HttpLocation  = _
-  var appUri: Uri                = _
-  var keycloakHandle: StopHandle = _
+  var appLocation: HttpLocation  = uninitialized
+  var appUri: Uri                = uninitialized
+  var keycloakHandle: StopHandle = uninitialized
 
   protected override def beforeAll(): Unit = {
     super.beforeAll()
@@ -59,6 +60,11 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
   }
 
   "SampleWiring" must {
+
+    "start the sample app and register with location service" in {
+      val resolvedLocation = locationService.resolve(appConnection, 5.seconds).futureValue
+      resolvedLocation.get.connection should ===(appConnection)
+    }
 
     // #add-route-test
     "call raDecValues and receive Response" in {
@@ -118,13 +124,15 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
     val eswAdminRole = "Esw-admin"
     val locationServerClient =
       Client(name = "tmt-frontend-app", clientType = "public", passwordGrantEnabled = true)
+
     val keycloakData = KeycloakData(
       realms = Set(
         Realm(
           name = "TMT",
+          // Note: As of Keycloak-24.x, firstName, lastName and email are required by default (and need to be unique!)
           users = Set(
-            ApplicationUser("admin", "password1", realmRoles = Set(eswUserRole, eswAdminRole)),
-            ApplicationUser("nonAdmin", "password2")
+            ApplicationUser("admin", "password1", "admin", "admin", "admin@tmt.org", realmRoles = Set(eswUserRole, eswAdminRole)),
+            ApplicationUser("nonAdmin", "password2", "nonAdmin", "nonAdmin", "nonAdmin@tmt.org")
           ),
           clients = Set(locationServerClient),
           realmRoles = Set(eswUserRole, eswAdminRole)
@@ -133,7 +141,7 @@ class SampleAppIntegrationTest extends ScalaTestFrameworkTestKit with AnyWordSpe
     )
     val embeddedKeycloak = new EmbeddedKeycloak(keycloakData, Settings(port = port, printProcessLogs = false))
     val stopHandle       = Await.result(embeddedKeycloak.startServer(), 1.minute)
-    locationService.register(HttpRegistration(AASConnection.value, keycloakPort, "auth")).futureValue
+    locationService.register(HttpRegistration(AASConnection.value, keycloakPort, "")).futureValue
     stopHandle
   }
 

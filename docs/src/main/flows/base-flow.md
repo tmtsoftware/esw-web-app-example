@@ -24,7 +24,8 @@ the  instructions in the READMEs in each sub-folder.
 ### Compile the Frontend
 
 The `sample-frontend` sub-folder is where your frontend application is located.  It uses Typescript, React and node.
-Make sure node version `v16.0.0` or higher is installed in your machine. Let's compile our generated application.
+Make sure node version `v22.15.1` and npm version 10.9.2 or higher are installed in your machine. 
+Let's compile our generated application.
 
 ```bash
 cd sample/sample-frontend
@@ -64,7 +65,7 @@ in separate IDE projects.  We recommend Intellij for the backend, and VS Code or
 To open the backend in Intellij, click on File->New Project from Existing Sources... 
 and then browsing to the backend directory, `sample/sample-backend`.  It should have a build.sbt file in it.
 Create an sbt-based project, and then accept the defaults, making sure the JDK is set to your installation of 
-OpenJDK 11.
+OpenJDK 21.
 
 ## Develop Backend
 
@@ -186,7 +187,7 @@ Scala
 
 Next, we will add our routes.  We will have a single endpoint `raDecValues` that supports two methods: POST and GET.
 The POST method will cause our backend service method `raDecToString` to be called, and GET will call `getRaDecValues`.
-We are using the Akka routing DSL to compose our HTTP routes. Visit [here](https://doc.akka.io/docs/akka-http/current/routing-dsl/overview.html) to learn more about the routing DSL.
+We are using the Pekko routing DSL to compose our HTTP routes. Visit [here](https://doc.pekko.io/docs/pekko-http/current/routing-dsl/overview.html) to learn more about the routing DSL.
 
 Be sure to add an import for our model `RaDecRequest`.
 
@@ -194,7 +195,7 @@ Scala
 : @@snip [SampleRoute.scala](../../../../backend/src/main/scala/org/tmt/sample/http/SampleRoute.scala) { #add-routes }
 
 @@@note
-The tilda (~) at the end, is used to concatenate paths in the Akka DSL.
+The tilda (~) at the end, is used to concatenate paths in the Pekko DSL.
 You can safely remove it for now. However, in the following section of this tutorial we are going to add new routes to this file. At that point, you would want to add it again to concatenate multiple routes.
 @@@
 
