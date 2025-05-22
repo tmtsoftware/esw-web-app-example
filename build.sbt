@@ -1,7 +1,7 @@
 import org.tmt.sbt.docs.DocKeys._
 import org.tmt.sbt.docs.Settings
 
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / scalaVersion := "3.6.4"
 ThisBuild / organizationName := "TMT Org"
 ThisBuild / docsRepo := "https://github.com/tmtsoftware/tmtsoftware.github.io.git"
 ThisBuild / docsParentDir := "esw-web-app-example"
